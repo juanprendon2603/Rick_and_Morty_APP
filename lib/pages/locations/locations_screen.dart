@@ -13,6 +13,8 @@ class LocationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     var provider = context.watch<LocationsProvider>();
 
     return Scaffold(
@@ -21,37 +23,53 @@ class LocationsScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: appBarColor,
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(charactersPadding),
-        itemCount: provider.locations.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            trailing: Text(
-              provider.locations[index].type,
-              style: TextStyle(color: appBarColor, fontSize: height * subtitle),
+      body: Column(
+        children: [
+          SizedBox(
+            height: height * heigthListile,
+            child: ListView.separated(
+              padding: const EdgeInsets.all(charactersPadding),
+              itemCount: provider.locations.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  trailing: Text(
+                    provider.locations[index].type,
+                    style: TextStyle(
+                        color: appBarColor, fontSize: height * subtitle),
+                  ),
+                  title: Text(
+                    provider.locations[index].name,
+                  ),
+                  onTap: () {
+                    generalDialog(
+                      context,
+                      provider,
+                      index,
+                      provider.locations[index].name,
+                      tType,
+                      provider.locations[index].type,
+                      tDimension,
+                      provider.locations[index].dimension,
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider(
+                  thickness: 2,
+                );
+              },
             ),
-            title: Text(
-              provider.locations[index].name,
-            ),
-            onTap: () {
-              generalDialog(
-                context,
-                provider,
-                index,
-                provider.locations[index].name,
-                tType,
-                provider.locations[index].type,
-                tDimension,
-                provider.locations[index].dimension,
-              );
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider(
-            thickness: 2,
-          );
-        },
+          ),
+          pagination(width, height, provider.page, provider.totalPages, context,
+              () async {
+            context.read<LocationsProvider>().incrementPage();
+            await context.read<LocationsProvider>().getLocations();
+          }, () async {
+            context.read<LocationsProvider>().decreasePage();
+            await context.read<LocationsProvider>().getLocations();
+          })
+        ],
       ),
     );
   }

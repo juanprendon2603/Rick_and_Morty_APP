@@ -95,3 +95,42 @@ Column columnDialog(String title, String subtitle, Size size) {
     ],
   );
 }
+
+Container pagination(double width, double heigth, int page, int totalPages,
+    BuildContext context, Function() increment, Function() decrease) {
+  return Container(
+    padding: EdgeInsets.all(heigth * paddingPagination),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        SizedBox(
+          width: width * buttonPaginationWidth,
+          child: FittedBox(
+            child: FloatingActionButton(
+              heroTag: "btn1",
+              backgroundColor: buttonColor,
+              onPressed: page > 1 ? decrease : null,
+              child: const Icon(
+                Icons.arrow_back,
+              ),
+            ),
+          ),
+        ),
+        Text('Page $page of $totalPages'),
+        SizedBox(
+          width: width * buttonPaginationWidth,
+          child: FittedBox(
+            child: FloatingActionButton(
+              heroTag: "btn1",
+              backgroundColor: buttonColor,
+              onPressed: increment,
+              child: const Icon(
+                Icons.arrow_forward,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}

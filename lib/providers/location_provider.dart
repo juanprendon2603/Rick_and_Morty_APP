@@ -15,8 +15,40 @@ class LocationsProvider with ChangeNotifier {
   }
 
   Future getLocations() async {
-    var response = await _repository.getLocations();
-    getList(List<Locations>.from(response.map((x) => Locations.fromJson(x))));
+    var response = await _repository.getLocations(_page);
+    getList(List<Locations>.from(
+        response['results'].map((x) => Locations.fromJson(x))));
+    getInfo(response['info']);
     notifyListeners();
   }
+
+  Map<String, dynamic> _info = {};
+  Map<String, dynamic> get info => _info;
+
+  void getInfo(Map<String, dynamic> info) {
+    _info = info;
+    _totalPages = info['pages'];
+    notifyListeners();
+  }
+
+  int _page = 1;
+  int get page => _page;
+
+  void resetPage() {
+    _page = 1;
+    notifyListeners();
+  }
+
+  void incrementPage() {
+    _page++;
+    notifyListeners();
+  }
+
+  void decreasePage() {
+    _page--;
+    notifyListeners();
+  }
+
+  int _totalPages = 0;
+  int get totalPages => _totalPages;
 }

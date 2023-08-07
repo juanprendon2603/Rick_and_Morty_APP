@@ -21,3 +21,6 @@ const double dialogPadding = 10.0;
 const double dialogMargin = 0.05;
 const double sizeAvatar = 100;
 const double borderAvatar = 110;
+const double buttonPaginationWidth = 0.10;
+const double paddingPagination = 0.01;
+const double heigthListile = 0.8;

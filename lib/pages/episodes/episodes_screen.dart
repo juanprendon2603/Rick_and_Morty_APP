@@ -13,6 +13,8 @@ class EpisodesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+
     var provider = context.watch<EpisodesProvider>();
 
     return Scaffold(
@@ -21,37 +23,53 @@ class EpisodesScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: appBarColor,
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(charactersPadding),
-        itemCount: provider.episodes.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            trailing: Text(
-              provider.episodes[index].episode,
-              style: TextStyle(color: appBarColor, fontSize: height * subtitle),
+      body: Column(
+        children: [
+          SizedBox(
+            height: height * heigthListile,
+            child: ListView.separated(
+              padding: const EdgeInsets.all(charactersPadding),
+              itemCount: provider.episodes.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  trailing: Text(
+                    provider.episodes[index].episode,
+                    style: TextStyle(
+                        color: appBarColor, fontSize: height * subtitle),
+                  ),
+                  title: Text(
+                    provider.episodes[index].name,
+                  ),
+                  onTap: () {
+                    generalDialog(
+                      context,
+                      provider,
+                      index,
+                      provider.episodes[index].name,
+                      tEpisodeNumber,
+                      provider.episodes[index].episode,
+                      tAirDate,
+                      provider.episodes[index].airDate,
+                    );
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider(
+                  thickness: 2,
+                );
+              },
             ),
-            title: Text(
-              provider.episodes[index].name,
-            ),
-            onTap: () {
-              generalDialog(
-                context,
-                provider,
-                index,
-                provider.episodes[index].name,
-                tEpisodeNumber,
-                provider.episodes[index].episode,
-                tAirDate,
-                provider.episodes[index].airDate,
-              );
-            },
-          );
-        },
-        separatorBuilder: (context, index) {
-          return const Divider(
-            thickness: 2,
-          );
-        },
+          ),
+          pagination(width, height, provider.page, provider.totalPages, context,
+              () async {
+            context.read<EpisodesProvider>().incrementPage();
+            await context.read<EpisodesProvider>().getEpisodes();
+          }, () async {
+            context.read<EpisodesProvider>().decreasePage();
+            await context.read<EpisodesProvider>().getEpisodes();
+          })
+        ],
       ),
     );
   }

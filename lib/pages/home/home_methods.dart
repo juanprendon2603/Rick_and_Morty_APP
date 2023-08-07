@@ -66,18 +66,23 @@ Row rowHome(
               switch (route) {
                 case '/characters':
                   {
+                    context.read<CharactersProvider>().resetPage();
                     await context.read<CharactersProvider>().getCharacters();
                   }
                   break;
 
                 case '/locations':
                   {
+                    context.read<LocationsProvider>().resetPage();
+
                     await context.read<LocationsProvider>().getLocations();
                   }
                   break;
 
                 case '/episodes':
                   {
+                    context.read<EpisodesProvider>().resetPage();
+
                     await context.read<EpisodesProvider>().getEpisodes();
                   }
                   break;
