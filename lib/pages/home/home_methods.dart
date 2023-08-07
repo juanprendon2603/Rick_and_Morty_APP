@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/providers/character_provider.dart';
-import 'package:rick_and_morty_app/src/routes/routes.dart';
+import 'package:rick_and_morty_app/providers/episode_provider.dart';
+import 'package:rick_and_morty_app/providers/location_provider.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/sizes.dart';
@@ -62,10 +63,29 @@ Row rowHome(
             heroTag: "btn1",
             backgroundColor: buttonColor,
             onPressed: () async {
-              await context.read<CharactersProvider>().getCharacters();
+              switch (route) {
+                case '/characters':
+                  {
+                    await context.read<CharactersProvider>().getCharacters();
+                  }
+                  break;
+
+                case '/locations':
+                  {
+                    await context.read<LocationsProvider>().getLocations();
+                  }
+                  break;
+
+                case '/episodes':
+                  {
+                    await context.read<EpisodesProvider>().getEpisodes();
+                  }
+                  break;
+              }
+
               Navigator.pushNamed(
                 context,
-                characters,
+                route,
               );
             },
             child: const Icon(

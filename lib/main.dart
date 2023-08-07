@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/providers/character_provider.dart';
+import 'package:rick_and_morty_app/providers/episode_provider.dart';
+import 'package:rick_and_morty_app/providers/location_provider.dart';
 import 'package:rick_and_morty_app/src/routes/pages.dart';
 import 'package:rick_and_morty_app/src/routes/routes.dart';
 
 Future<void> main() async {
-  runApp(ChangeNotifierProvider(
-    create: (_) => CharactersProvider(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => CharactersProvider()),
+      ChangeNotifierProvider(create: (_) => EpisodesProvider()),
+      ChangeNotifierProvider(create: (_) => LocationsProvider()),
+    ],
     child: const MyApp(),
   ));
 }

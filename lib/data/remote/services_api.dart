@@ -15,4 +15,32 @@ class ServicesAPI {
       return e;
     }
   }
+
+  Future getEpisodes() async {
+    final dio = Dio(BaseOptions(baseUrl: server.toString()));
+
+    try {
+      final response = await dio.get(
+        '/episode',
+      );
+
+      return response.data['results'];
+    } on DioException catch (e) {
+      return e;
+    }
+  }
+
+  Future getLocations() async {
+    final dio = Dio(BaseOptions(baseUrl: server.toString()));
+
+    try {
+      final response = await dio.get(
+        '/location',
+      );
+
+      return response.data['results'];
+    } on DioException catch (e) {
+      return e;
+    }
+  }
 }
