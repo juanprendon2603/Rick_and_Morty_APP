@@ -1,5 +1,7 @@
-//assets
+//server
+const String server = 'https://rickandmortyapi.com/api';
 
+//assets
 const iWelcome = 'lib/assets/welcome.png';
 const iEpisodes = 'lib/assets/episodes.png';
 const iLocations = 'lib/assets/locations.png';

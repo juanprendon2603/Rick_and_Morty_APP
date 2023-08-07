@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rick_and_morty_app/providers/character_provider.dart';
+import 'package:rick_and_morty_app/src/routes/routes.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/sizes.dart';
@@ -56,11 +59,13 @@ Row rowHome(
         width: width * buttonHomeWidth,
         child: FittedBox(
           child: FloatingActionButton(
+            heroTag: "btn1",
             backgroundColor: buttonColor,
-            onPressed: () {
+            onPressed: () async {
+              await context.read<CharactersProvider>().getCharacters();
               Navigator.pushNamed(
                 context,
-                route,
+                characters,
               );
             },
             child: const Icon(

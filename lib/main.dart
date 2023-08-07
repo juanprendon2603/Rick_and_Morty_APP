@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meedu/ui.dart';
+import 'package:provider/provider.dart';
+import 'package:rick_and_morty_app/providers/character_provider.dart';
 import 'package:rick_and_morty_app/src/routes/pages.dart';
 import 'package:rick_and_morty_app/src/routes/routes.dart';
 
 Future<void> main() async {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (_) => CharactersProvider(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,7 +17,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorObservers: [router.observer],
       debugShowCheckedModeBanner: false,
       routes: appRoutes,
       initialRoute: welcome,

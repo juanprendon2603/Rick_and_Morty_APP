@@ -1,5 +1,6 @@
 const double defaultPadding = 30.0;
 const double homePadding = 15.0;
+const double charactersPadding = 15.0;
 const double borderWidth = 6.0;
 const double title = 0.02;
 const double subtitle = 0.018;

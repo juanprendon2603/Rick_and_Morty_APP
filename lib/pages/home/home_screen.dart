@@ -26,10 +26,29 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               rowHome(
-                  context, width, height, iCharacters, tCharacters, characters),
+                context,
+                width,
+                height,
+                iCharacters,
+                tCharacters,
+                characters,
+              ),
               rowHome(
-                  context, width, height, iLocations, tLocations, locations),
-              rowHome(context, width, height, iEpisodes, tEpisodes, episodes),
+                context,
+                width,
+                height,
+                iLocations,
+                tLocations,
+                locations,
+              ),
+              rowHome(
+                context,
+                width,
+                height,
+                iEpisodes,
+                tEpisodes,
+                episodes,
+              ),
             ],
           )),
     );
