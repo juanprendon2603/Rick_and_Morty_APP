@@ -30,3 +30,12 @@ const String tAirDate = 'Air date:';
 //Characters Screen
 const String tOrigin = 'Origin:';
 const String tLocation = 'Last known location:';
+
+//Search
+const String tSearch = 'Search';
+const String tDefault = 'No results found';
+
+//Hero tags
+const String tButtonCharacters = 'character';
+const String tButtonEpisodes = 'episode';
+const String tButtonLocations = 'location';

@@ -15,10 +15,16 @@ class CharactersProvider with ChangeNotifier {
   }
 
   Future getCharacters() async {
-    var response = await _repository.getCharacters(_page);
-    getList(List<Character>.from(
-        response['results'].map((x) => Character.fromJson(x))));
-    getInfo(response['info']);
+    var response =
+        await _repository.getCharacters(_page, _controllerSearch.text);
+    if (response['status'] == 200) {
+      getList(List<Character>.from(
+          response['data']['results'].map((x) => Character.fromJson(x))));
+      getInfo(response['data']['info']);
+    } else {
+      characters.clear();
+    }
+
     notifyListeners();
   }
 
@@ -51,4 +57,20 @@ class CharactersProvider with ChangeNotifier {
 
   int _totalPages = 0;
   int get totalPages => _totalPages;
+
+  bool _isSearching = false;
+  bool get isSearching => _isSearching;
+
+  void changeIsSearching() {
+    _isSearching = !_isSearching;
+    notifyListeners();
+  }
+
+  final TextEditingController _controllerSearch = TextEditingController();
+  TextEditingController get controllerSearch => _controllerSearch;
+
+  void resetControllerSearch() {
+    _controllerSearch.clear();
+    notifyListeners();
+  }
 }

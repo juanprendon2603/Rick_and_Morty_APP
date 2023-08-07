@@ -24,3 +24,7 @@ const double borderAvatar = 110;
 const double buttonPaginationWidth = 0.10;
 const double paddingPagination = 0.01;
 const double heigthListile = 0.8;
+const double heigthListileSearching = 0.7;
+const double heigthSearch = 0.1;
+const double searchPadding = 20.0;
+const double searchborderRadius = 25.0;

@@ -14,6 +14,7 @@ Row rowHome(
   String image,
   String title,
   String route,
+  String hero,
 ) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,7 +61,7 @@ Row rowHome(
         width: width * buttonHomeWidth,
         child: FittedBox(
           child: FloatingActionButton(
-            heroTag: "btn1",
+            heroTag: Text(hero),
             backgroundColor: buttonColor,
             onPressed: () async {
               switch (route) {

@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
                 iCharacters,
                 tCharacters,
                 characters,
+                tButtonCharacters,
               ),
               rowHome(
                 context,
@@ -40,6 +41,7 @@ class HomeScreen extends StatelessWidget {
                 iLocations,
                 tLocations,
                 locations,
+                tButtonLocations,
               ),
               rowHome(
                 context,
@@ -48,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                 iEpisodes,
                 tEpisodes,
                 episodes,
+                tButtonEpisodes,
               ),
             ],
           )),

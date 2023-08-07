@@ -22,44 +22,78 @@ class EpisodesScreen extends StatelessWidget {
         title: const Text(tHomeTitle),
         automaticallyImplyLeading: false,
         backgroundColor: appBarColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.read<EpisodesProvider>().changeIsSearching();
+                context.read<EpisodesProvider>().resetControllerSearch();
+                context.read<EpisodesProvider>().getEpisodes();
+              },
+              icon: provider.isSearching
+                  ? const Icon(Icons.close)
+                  : const Icon(Icons.search))
+        ],
       ),
       body: Column(
         children: [
+          provider.isSearching
+              ? Container(
+                  height: height * heigthSearch,
+                  padding: const EdgeInsets.all(searchPadding),
+                  child: TextField(
+                    controller: provider.controllerSearch,
+                    onChanged: (value) async =>
+                        await context.read<EpisodesProvider>().getEpisodes(),
+                    decoration: const InputDecoration(
+                        hintText: tSearch,
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(searchborderRadius)))),
+                  ),
+                )
+              : Container(),
           SizedBox(
-            height: height * heigthListile,
-            child: ListView.separated(
-              padding: const EdgeInsets.all(charactersPadding),
-              itemCount: provider.episodes.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  trailing: Text(
-                    provider.episodes[index].episode,
-                    style: TextStyle(
-                        color: appBarColor, fontSize: height * subtitle),
+            height: provider.isSearching
+                ? height * heigthListileSearching
+                : height * heigthListile,
+            child: provider.episodes.isEmpty
+                ? const Center(
+                    child: Text(tDefault),
+                  )
+                : ListView.separated(
+                    padding: const EdgeInsets.all(charactersPadding),
+                    itemCount: provider.episodes.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        trailing: Text(
+                          provider.episodes[index].episode,
+                          style: TextStyle(
+                              color: appBarColor, fontSize: height * subtitle),
+                        ),
+                        title: Text(
+                          provider.episodes[index].name,
+                        ),
+                        onTap: () {
+                          generalDialog(
+                            context,
+                            provider,
+                            index,
+                            provider.episodes[index].name,
+                            tEpisodeNumber,
+                            provider.episodes[index].episode,
+                            tAirDate,
+                            provider.episodes[index].airDate,
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider(
+                        thickness: 2,
+                      );
+                    },
                   ),
-                  title: Text(
-                    provider.episodes[index].name,
-                  ),
-                  onTap: () {
-                    generalDialog(
-                      context,
-                      provider,
-                      index,
-                      provider.episodes[index].name,
-                      tEpisodeNumber,
-                      provider.episodes[index].episode,
-                      tAirDate,
-                      provider.episodes[index].airDate,
-                    );
-                  },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return const Divider(
-                  thickness: 2,
-                );
-              },
-            ),
           ),
           pagination(width, height, provider.page, provider.totalPages, context,
               () async {

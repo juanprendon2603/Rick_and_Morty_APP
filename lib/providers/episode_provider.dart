@@ -15,10 +15,15 @@ class EpisodesProvider with ChangeNotifier {
   }
 
   Future getEpisodes() async {
-    var response = await _repository.getEpisodes(_page);
-    getList(List<Episodes>.from(
-        response['results'].map((x) => Episodes.fromJson(x))));
-    getInfo(response['info']);
+    var response = await _repository.getEpisodes(_page, _controllerSearch.text);
+    if (response['status'] == 200) {
+      getList(List<Episodes>.from(
+          response['data']['results'].map((x) => Episodes.fromJson(x))));
+      getInfo(response['data']['info']);
+    } else {
+      episodes.clear();
+    }
+
     notifyListeners();
   }
 
@@ -51,4 +56,20 @@ class EpisodesProvider with ChangeNotifier {
 
   int _totalPages = 0;
   int get totalPages => _totalPages;
+
+  bool _isSearching = false;
+  bool get isSearching => _isSearching;
+
+  void changeIsSearching() {
+    _isSearching = !_isSearching;
+    notifyListeners();
+  }
+
+  final TextEditingController _controllerSearch = TextEditingController();
+  TextEditingController get controllerSearch => _controllerSearch;
+
+  void resetControllerSearch() {
+    _controllerSearch.clear();
+    notifyListeners();
+  }
 }

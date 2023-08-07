@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/colors.dart';
@@ -107,7 +108,7 @@ Container pagination(double width, double heigth, int page, int totalPages,
           width: width * buttonPaginationWidth,
           child: FittedBox(
             child: FloatingActionButton(
-              heroTag: "btn1",
+              heroTag: "btn2",
               backgroundColor: buttonColor,
               onPressed: page > 1 ? decrease : null,
               child: const Icon(
@@ -121,9 +122,9 @@ Container pagination(double width, double heigth, int page, int totalPages,
           width: width * buttonPaginationWidth,
           child: FittedBox(
             child: FloatingActionButton(
-              heroTag: "btn1",
+              heroTag: "btn3",
               backgroundColor: buttonColor,
-              onPressed: increment,
+              onPressed: page < totalPages ? increment : null,
               child: const Icon(
                 Icons.arrow_forward,
               ),
@@ -131,6 +132,18 @@ Container pagination(double width, double heigth, int page, int totalPages,
           ),
         ),
       ],
+    ),
+  );
+}
+
+Positioned loading() {
+  return Positioned.fill(
+    child: Container(
+      alignment: Alignment.center,
+      color: Colors.white30,
+      child: const CupertinoActivityIndicator(
+        radius: 20,
+      ),
     ),
   );
 }
