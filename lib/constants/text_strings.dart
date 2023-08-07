@@ -18,3 +18,15 @@ const String tCharacters = 'Characters';
 const String tLocations = 'Locations';
 const String tEpisodes = 'Episodes';
 const String tHomeTitle = 'Rick and Morty App';
+
+//Locations Screen
+const String tType = 'Type';
+const String tDimension = 'Dimension';
+
+//Episodes Screen
+const String tEpisodeNumber = 'Episode number:';
+const String tAirDate = 'Air date:';
+
+//Characters Screen
+const String tOrigin = 'Origin:';
+const String tLocation = 'Last known location:';
